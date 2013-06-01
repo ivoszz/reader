@@ -15,7 +15,7 @@ module.exports = function (grunt) {
   };
 
   try {
-    yeomanConfig.app = require('./component.json').appPath || yeomanConfig.app;
+    yeomanConfig.app = require('./bower.json').appPath || yeomanConfig.app;
   } catch (e) {}
 
   grunt.initConfig({
@@ -28,6 +28,10 @@ module.exports = function (grunt) {
       coffeeTest: {
         files: ['test/spec/{,*/}*.coffee'],
         tasks: ['coffee:test']
+      },
+      compass: {
+        files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+        tasks: ['compass']
       },
       livereload: {
         files: [
@@ -118,6 +122,29 @@ module.exports = function (grunt) {
           dest: '.tmp/spec',
           ext: '.js'
         }]
+      }
+    },
+    compass: {
+      options: {
+        sassDir: '<%= yeoman.app %>/styles',
+        cssDir: '.tmp/styles',
+        imagesDir: '<%= yeoman.app %>/images',
+        javascriptsDir: '<%= yeoman.app %>/scripts',
+        fontsDir: '<%= yeoman.app %>/styles/fonts',
+        importPath: '<%= yeoman.app %>/components',
+        relativeAssets: true
+      },
+      dist: {},
+      server: {
+        options: {
+          debugInfo: true
+        }
+      },
+      bootstrap: {
+        options: {
+          sassDir: '<%= yeoman.app %>/components/sass-bootstrap/lib',
+          cssDir: '.tmp/styles'
+        }
       }
     },
     concat: {
@@ -243,6 +270,8 @@ module.exports = function (grunt) {
   grunt.registerTask('server', [
     'clean:server',
     'coffee:dist',
+    'compass:server',
+    'compass:bootstrap',
     'livereload-start',
     'connect:livereload',
     'open',
@@ -252,6 +281,7 @@ module.exports = function (grunt) {
   grunt.registerTask('test', [
     'clean:server',
     'coffee',
+    'compass',
     'connect:test',
     'karma'
   ]);
@@ -261,6 +291,8 @@ module.exports = function (grunt) {
     'jshint',
     'test',
     'coffee',
+    'compass:bootstrap',
+    'compass:dist',
     'useminPrepare',
     'imagemin',
     'cssmin',
