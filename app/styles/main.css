@@ -1,1 +1,9 @@
-/* Will be compiled down to a single stylesheet with your sass files */
+/* line 3, main.scss */
+body {
+  background-color: aliceblue;
+}
+
+/* line 7, main.scss */
+* {
+  background-color: aliceblue;
+}

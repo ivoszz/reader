@@ -127,7 +127,7 @@ module.exports = function (grunt) {
     compass: {
       options: {
         sassDir: '<%= yeoman.app %>/styles',
-        cssDir: '.tmp/styles',
+        cssDir: '<%= yeoman.app %>/styles',
         imagesDir: '<%= yeoman.app %>/images',
         javascriptsDir: '<%= yeoman.app %>/scripts',
         fontsDir: '<%= yeoman.app %>/styles/fonts',
@@ -143,7 +143,7 @@ module.exports = function (grunt) {
       bootstrap: {
         options: {
           sassDir: '<%= yeoman.app %>/components/sass-bootstrap/lib',
-          cssDir: '.tmp/styles'
+          cssDir: '<%= yeoman.app %>/styles'
         }
       }
     },

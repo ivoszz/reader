@@ -1,9 +1,23 @@
-<p>Refresh interval: <input ng-model="refreshInterval"></p>
-
+<form class="form-horizontal" novalidate>
+  <label>Refresh (seconds)</label>
+  <input class="input-small" ng-model="refreshInterval" type="number"></p>
+</form>
 <div>
-  <h2>Add Another Feed</h2>
-  URL: <input size="80" ng-model="newFeed.url">
-  <button ng-click="addFeed(newFeed)">Add Feed</button>
+  <form class="form-horizontal" name="newFeed">
+    <legend>Add Another Feed</legend>
+    <div class="input-append">
+      <input class="input-xxlarge" name="url" ng-model="newFeed.url" type="url" required>
+      <button class="btn" ng-disabled="!newFeed.$valid" ng-click="addFeed(newFeed)">
+        Add Feed
+      </button>
+    </div>
+    <span class="help-inline text-error" ng-show="newFeed.$error.url">
+      <span class="text-error">Invalid URL format!</span>
+    </span>
+    <span class="help-inline" ng-show="newFeed.$error.required">
+      <span class="text-error">Required!</span>
+    </span>
+  </form>
   <hr>
 </div>
 
@@ -13,8 +27,11 @@
       <a href="{{item.link.href}}">{{item.title}}</a>
     </li>
   </ul>
-  URL: <input size="80" ng-model="feed.url">
-  <button ng-click="fetchFeed(feed)">Update</button>
-  <button ng-click="deleteFeed(feed)">Delete</button>
-  <hr>
+  <form class="form-horizontal" novalidate>
+    <div class="input-append">
+      <input class="input-xxlarge" name="feed" ng-model="feed.url" type="url" required>
+      <button class="btn" ng-click="fetchFeed(feed)">Update</button>
+      <button class="btn" ng-click="deleteFeed(feed)">Delete</button>
+    </div>
+  </form>
 </div>

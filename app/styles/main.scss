@@ -1,0 +1,9 @@
+$background-color: AliceBlue;
+
+body {
+  background-color: $background-color;
+}
+
+* {
+  background-color: $background-color; 
+}
