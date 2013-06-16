@@ -1,7 +1,18 @@
+<h1>reader</h1>
+
 <form class="form-horizontal" novalidate>
   <label>Refresh (seconds)</label>
   <input class="input-small" ng-model="refreshInterval" type="number"></p>
 </form>
+
+<h2>All Stories</h2>
+
+<ul>
+  <li ng-repeat="item in stories">
+    <a href="{{item.link.href}}">{{item.title}}</a>1
+  </li>
+</ul>
+
 <div>
   <form class="form-horizontal" name="newFeed">
     <legend>Add Another Feed</legend>

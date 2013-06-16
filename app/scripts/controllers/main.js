@@ -1,10 +1,33 @@
 'use strict';
 
 angular.module('readerApp')
-  .controller('MainCtrl', function ($scope, $http, $timeout) {
+  .controller('MainCtrl', function ($scope, $http, $timeout, $filter) {
+
+    function storyInCollection(story) {
+      for (var i = 0; i < $scope.stories.length; i++) {
+        if ($scope.stories[i].id === story.id) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function addStories(stories) {
+      var changed = false;
+      angular.forEach(stories, function(story, key) {
+        if (!storyInCollection(story)) {
+          $scope.stories.push(story);
+          changed = true;
+        }
+      });
+      if (changed) {
+        $scope.stories = $filter('orderBy')($scope.stories, 'date');
+      }
+    }
 
     // refreshInterval in seconds
     $scope.refreshInterval = 60;
+    $scope.stories = [];
 
     $scope.feeds = [{
       url: 'http://dailyjs.com/atom.xml'
@@ -25,6 +48,7 @@ angular.module('readerApp')
           if (data.query.results) {
             feed.items = data.query.results.entry;
           }
+          addStories(feed.items);
         })
         // function(data, status, headers, config)
         .error(function(data) {
